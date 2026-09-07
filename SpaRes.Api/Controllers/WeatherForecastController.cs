@@ -29,5 +29,14 @@ namespace SpaRes.Api.Controllers
             })
             .ToArray();
         }
+
+
+        // GET: WeatherForecast/snow
+        [HttpGet("snow")]
+        public ActionResult<string> GetHelloSnow()
+        {
+            return Ok("Hello Snow"); // Returns HTTP 200 with the plain text or JSON string
+        }
+
     }
 }
