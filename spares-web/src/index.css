@@ -1,0 +1,46 @@
+:root {
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  color: #213547;
+  background-color: #ffffff;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.inactive-reservations {
+    margin-top: 20px;
+    padding: 16px;
+    background: #f4f4f4;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+}
+
+.inactive-reservations h2 {
+    margin-top: 0;
+    color: #666;
+}
+
+.inactive-reservation {
+    margin-bottom: 10px;
+    padding: 12px 16px;
+    background: #e8e8e8;
+    border-left: 5px solid #888;
+    border-radius: 4px;
+    color: #777;
+    opacity: 0.8;
+}
+
+.inactive-reservation:last-child {
+    margin-bottom: 0;
+}
+
+.inactive-reservation strong {
+    color: #555;
+}
