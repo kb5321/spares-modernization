@@ -5,6 +5,8 @@ import type { ResLog, UpcomingReservation } from './types/reservation'
 import type { Client, Location, Room, Service, Staff } from './types/referenceData'
 import './App.css'
 
+import StaffScheduleManager from './components/StaffScheduleManager'
+
 function AppRefactor() {
 
     // ========================================
@@ -349,7 +351,7 @@ function AppRefactor() {
 
         setIsBooking(true)
         setBookingMessage('Creating reservation...')
-    
+
         fetch('https://localhost:7021/api/Reservation', {
         method: 'POST',
         headers: getAuthHeaders(),
@@ -423,8 +425,8 @@ function AppRefactor() {
                 headers: getAuthHeaders()
             })
         .then((response) => {
-            
-            
+
+
             if (handleUnauthorizedResponse(response)) {
                 throw new Error('Your session has expired. Please log in again.')
             }
@@ -468,10 +470,10 @@ function AppRefactor() {
     // ========================================
     // Edit Reservation — SAVE HANDLERS
     // ========================================
-    
+
     const handleEditReservation = (reservation: UpcomingReservation) => {
         setEditingReservation(reservation);
-    
+
     };
 
     const saveReservationDate = async () => {
@@ -484,7 +486,7 @@ function AppRefactor() {
             {
                 method: "PATCH",
                 headers: getAuthHeaders(),
-        
+
                 body: JSON.stringify({
                     date: editingReservation.date
                 })
@@ -513,7 +515,7 @@ function AppRefactor() {
           {
               method: "PATCH",
               headers: getAuthHeaders(),
-             
+
                 body: JSON.stringify({
                   time: editingReservation.time.length === 5
                       ? `${editingReservation.time}:00`
@@ -622,7 +624,7 @@ function AppRefactor() {
                         throw new Error('Your session has expired. Please log in again.')
             }
 
-            
+
                 if (!response.ok) {
                     setRescheduleAvailableTimes([]);
                     setRescheduleAvailabilityMessage('Unable to load available times.');
@@ -643,7 +645,7 @@ function AppRefactor() {
             setRescheduleAvailableTimes([]);
             setRescheduleAvailabilityMessage('Unable to load available times.');
          }
-            
+
     }
 
     async function handleSaveReschedule() {
@@ -860,9 +862,9 @@ function AppRefactor() {
     };
 
 
-    
+
     const saveReservationNote = async () => {
-    
+
         if (!editingReservation) {
             return;
         }
@@ -881,7 +883,7 @@ function AppRefactor() {
 
          // Handle expired authentication
         if (handleUnauthorizedResponse(response)) return;
-    
+
 
         if (!response.ok) {
             const error = await response.text();
@@ -987,7 +989,7 @@ function AppRefactor() {
     };
 
     const saveReservationDuration = async () => {
-    
+
         if (!editingReservation) {
             return;
         }
@@ -1089,10 +1091,16 @@ function AppRefactor() {
         </header>
 
         <main>
+
+        <StaffScheduleManager
+            staff={staff}
+            locations={locations}
+        />
+
          {/* =====================================================
         CANCELLED / VOID RESERVATIONS
         ===================================================== */}   
-            
+
         <button
           type="button"
           onClick={() => {
@@ -1401,7 +1409,7 @@ function AppRefactor() {
                 =============================================
                     EDIT RESERVATION — ROOM
                 ============================================= 
-    
+
     */}
 
     <div>
@@ -1508,7 +1516,7 @@ function AppRefactor() {
                   =============================================
                       EDIT RESERVATION — DURATION
                   ============================================= 
-    
+
     */}
 
     <div>
@@ -1655,7 +1663,7 @@ function AppRefactor() {
     {locations.map((location) => (
       <option key={location.locationId} value={location.locationId}>
         {location.name}
-      
+
       </option>
     ))}
   </select>
@@ -1702,7 +1710,7 @@ function AppRefactor() {
           value={selectedDate}
           onChange={(event) => setSelectedDate(event.target.value)}
         />
-   
+
     {/* 
         =============================================
             NEW RESERVATION — TIME
@@ -1712,7 +1720,7 @@ function AppRefactor() {
     <select
       id="time"
       value={selectedTime}
-      
+
       onChange={(e) => {
         setSelectedTime(e.target.value)
         setBookingMessage('')
@@ -1758,12 +1766,12 @@ function AppRefactor() {
 
       >
 {isBooking ? 'Creating...' : 'Create Reservation'}
-  
+
   </button>
 
   <p>{bookingMessage}</p>
 
-   
+
   {/* =====================================================
           UPCOMING APPOINTMENTS
           =====================================================
@@ -1847,19 +1855,19 @@ function AppRefactor() {
 
 
       </td>
-       
+
           </tr>
         ))}
       </tbody>
     </table>
-  
+
   {/* 
     =====================================================
         RESERVATION HISTORY
     ===================================================== 
 */}
 
-    
+
 {historyReservationId !== null && (
   <div>
     <h3>Reservation History</h3>
@@ -1891,7 +1899,7 @@ function AppRefactor() {
       Close History
     </button>
   </div>
-  
+
 )}
 
 {/* 
@@ -1927,7 +1935,7 @@ function AppRefactor() {
       Current: {reschedulingReservation.date} at{" "}
       {reschedulingReservation.time.substring(0,5)}
     </p>
-    
+
 
     <label>
       New Date:
@@ -1954,7 +1962,7 @@ function AppRefactor() {
     {rescheduleAvailabilityMessage && (
     <p>{rescheduleAvailabilityMessage}</p>
     )}
-  
+
   {rescheduleAvailableTimes.length > 0 && (
   <div>
             <p>Available Times:</p>
@@ -1981,7 +1989,7 @@ function AppRefactor() {
             Save Reschedule
           </button>
 
-          
+
         )}
 
 

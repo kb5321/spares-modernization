@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SpaRes.Api.Data;
 using SpaRes.Api.Models;
 
@@ -35,6 +36,7 @@ namespace SpaRes.Api.Controllers
             return Ok(schedule);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -45,28 +47,21 @@ namespace SpaRes.Api.Controllers
                 return NotFound();
             }
 
+            var hasActiveReservations = _db.Reservations.Any(r =>
+                r.ServiceProviderId == schedule.StaffId &&
+                r.LocationId == schedule.LocationId &&
+                r.Date == schedule.Date &&
+                (r.ReservationStatus == ReservationStatus.Pending ||
+                 r.ReservationStatus == ReservationStatus.Confirmed));
+
+            if (hasActiveReservations)
+            {
+                return Conflict(
+                    "Cannot delete the schedule because Pending or Confirmed reservations exist for this date."
+                );
+            }
+
             _db.StaffSchedule.Remove(schedule);
-            _db.SaveChanges();
-
-            return NoContent();
-        }
-
-        [HttpDelete("staff/{staffId}")]
-        public IActionResult DeleteStaffSchedule(int staffId)
-        {
-            var staffSchedules = _db.StaffSchedule
-                .Where(s => s.StaffId == staffId)
-                .ToList();
-
-            if (staffSchedules.Count == 0)
-            {
-                return NotFound();
-            }
-
-            foreach (var schedule in staffSchedules)
-            {
-                _db.StaffSchedule.Remove(schedule);
-            }
             _db.SaveChanges();
 
             return NoContent();

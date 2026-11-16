@@ -56,9 +56,9 @@ namespace SpaRes.Api.Controllers
                 return BadRequest("EndDate cannot be in the past.");
             }
 
-            if (staffAbsence.EndDate <= staffAbsence.StartDate)
+            if (staffAbsence.EndDate < staffAbsence.StartDate)
             {
-                return BadRequest("EndDate must be later than StartDate.");
+                return BadRequest("EndDate cannot be earlier than StartDate.");
             }
 
 
@@ -95,7 +95,7 @@ namespace SpaRes.Api.Controllers
                 return BadRequest("EndDate cannot be in the past.");
             }
 
-            if (updatedAbsence.EndDate <= updatedAbsence.StartDate)
+            if (updatedAbsence.EndDate < updatedAbsence.StartDate)
             {
                 return BadRequest("EndDate must be later than StartDate.");
             }
@@ -134,7 +134,7 @@ namespace SpaRes.Api.Controllers
                 return BadRequest("EndDate cannot be in the past.");
             }
 
-            if (newEndDate <= newStartDate)
+            if (newEndDate < newStartDate)
             {
                 return BadRequest("EndDate must be later than StartDate.");
             }
