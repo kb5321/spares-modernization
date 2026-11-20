@@ -138,6 +138,15 @@ The backend must be running for API-dependent functionality.
 - **Incremental delivery:** Implemented and tested two functional vertical slices.
 - **Legacy modernization:** Applied modern web architecture to a commercial Windows desktop software domain.
 
+- ## Application Screenshots
+
+### Reservation Management
+
+Full-stack reservation workflow demonstrating appointment creation,
+availability validation, and reservation management actions.
+
+![SpaRes Reservation Management](docs/screenshots/reservation-management.png)
+
 ## Development Status
 
 **Completed development milestones:**
