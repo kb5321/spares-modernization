@@ -147,6 +147,12 @@ availability validation, and reservation management actions.
 
 ![SpaRes Reservation Management](docs/screenshots/reservation-management.png)
 
+### Staff Scheduling & Availability
+
+Manage date-specific staff schedules, working hours, and schedule updates through the React interface. Backend business rules protect schedules associated with active reservations.
+
+![SpaRes Staff Scheduling](docs/screenshots/staff-scheduling.png)
+
 ## Development Status
 
 **Completed development milestones:**
